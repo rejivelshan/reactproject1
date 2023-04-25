@@ -1,0 +1,123 @@
+App.jss:
+import logo from './logo.svg';
+import './App.css';
+import React,{useState, useEffect} from 'react';
+
+
+
+
+
+export default function Extrabit()
+ {
+    const[quotes,setQuotes]=useState("");
+    const[author,setAuthor]=useState("");
+    const[color1,setColor1]=useState("#5fc1dc");
+    const[color2,setColor2]=useState("#d3c255");
+    useEffect(()=> { 
+        fetch("http://api.quotable.io/random")
+        .then(res => res.json())
+        .then(
+            (quotes) =>{
+                setQuotes(quotes.content);
+               setAuthor(quotes.author);
+               console.log(quotes);
+            }
+        )
+    },[]);
+    let fetchNewQuotes=()=>{
+        fetch("http://api.quotable.io/random")
+        .then(res => res.json())
+        .then(
+            (quotes) =>{
+                setQuotes(quotes.content);
+               setAuthor(quotes.author);
+               setColor1('#' + Math.floor(Math.random() * 16777215).toString(16)); 
+               setColor2('#' + Math.floor(Math.random() * 16777215).toString(16));
+               console.log(quotes);
+               
+            
+            }
+        )
+        
+    
+        
+    };
+  return (
+   <body style={{background: `linear-gradient(to right, ${color1}, ${color2})`,}}>
+    <div className="quotes">
+    <h2>{quotes}</h2>
+    <small>-{author}-</small><br />
+     <div><button className='btn'  onClick={fetchNewQuotes}>New Quote </button>
+
+     <div style={{marginTop:"20%",marginLeft:"40%"}}>
+      <img src='https://th.bing.com/th?id=OIP.mjoG94zAqNefzlni3m2hRgHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.7&pid=3.1&rm=2' width={30} height={30}/>
+    </div>
+     
+     
+     </div>
+    
+    </div>
+    </body>
+    
+  )
+}
+
+App.css:
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right:1cm;
+    
+}
+
+.quotes{
+    background: url(https://s-media-cache-ak0.pinimg.com/originals/74/8c/28/748c28cd15f309f6ae3895f6828861f9.jpg);
+    background-size: cover;
+    width: 450px;
+    height: 320px;
+    border-radius: 10px;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+  }
+  .quotes h2{
+    font-size: 1em;
+    font-family: 'Lobster', cursive;
+    
+    
+   
+  
+  }.quotes small{
+    font-size:1em ;
+    font-family: 'Dancing Script', cursive;
+    
+      }
+  .btn{
+    display: block;
+    border: 2px solid #008CBA;
+    background: transparent;
+    padding: 2px 15px;
+    color: #008CBA;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: background 1s,color 1s;
+    
+  }.btn:hover{
+    background: #008CBA;
+    color:#c74646;
+    box-shadow: 0 9px 16px rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  }
